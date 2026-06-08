@@ -7,12 +7,11 @@
 import copy
 import uuid
 import typing
-import warnings
+import logging
 import functools
 import threading
 from collections import defaultdict
 from concurrent.futures import Future
-from traceback import format_exception
 from argparse import ArgumentParser, Namespace
 from concurrent.futures import ThreadPoolExecutor
 
@@ -28,6 +27,9 @@ __all__ = (
     "Server",
     "start_server"
 )
+
+
+logger = logging.getLogger(__name__)
 
 
 class Operation:
@@ -141,7 +143,7 @@ class Server:
             try:
                 message = self._comm.get()
             except Exception as exc:
-                warnings.warn("".join(format_exception(exc)), RuntimeWarning)
+                logger.warning("Receive exception", exc_info=exc)
                 continue
             request = message.data
 
@@ -152,7 +154,7 @@ class Server:
                 case proto.OperationRequest():
                     self._handle_operation_request(message)
                 case _:
-                    warnings.warn(f"Unknown request type {request}", RuntimeWarning)
+                    logger.warning(f"Unknown request type {request}")
                     continue
 
             # Finish if idle
@@ -169,7 +171,7 @@ class Server:
             case proto.RankFinalize():
                 self._handle_finalize(message)  # type: ignore (not inferred by typecheker)
             case _:
-                warnings.warn(f"Unknown state type {request}", RuntimeWarning)
+                logger.warning(f"Unknown state type {request}")
                 return
 
     def _handle_init(self, message: Message[proto.RankInit]) -> None:

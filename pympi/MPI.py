@@ -15,14 +15,13 @@ import uuid
 import enum
 import typing
 import atexit
-import warnings
+import logging
 import functools
 import threading
 import itertools
 from collections import abc
 from concurrent import futures
 from concurrent.futures import Future
-from traceback import format_exception
 
 import net_queue as nq
 from net_queue.utils.futures import queue, merge, set_running, set_result, set_exception, warn_exception
@@ -52,6 +51,8 @@ __all__ = (
 
 ANY_TAG: proto.Tag = 0
 ANY_SOURCE: proto.Rank = -1
+
+logger = logging.getLogger(__name__)
 
 
 def Init() -> None:
@@ -195,7 +196,7 @@ class Comm:
             try:
                 response = self._comm.get().data
             except Exception as exc:
-                warnings.warn("".join(format_exception(exc)), RuntimeWarning)
+                logger.warning("Receive exception", exc_info=exc)
                 continue
 
             match response:
@@ -307,7 +308,7 @@ class Comm:
                     case proto.StateResponse():
                         pass
                     case _:
-                        warnings.warn(f"Unknown response {response}", RuntimeWarning)
+                        logging.warning(f"Unknown response {response}")
                         continue  # response lost
 
                 if response.size == self.size:
@@ -332,7 +333,7 @@ class Comm:
                     case proto.StateResponse():
                         pass
                     case _:
-                        warnings.warn(f"Unknown response {response}", RuntimeWarning)
+                        logging.warning(f"Unknown response {response}")
                         continue  # response lost
 
                 if response.size == 0:
