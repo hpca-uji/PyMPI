@@ -243,7 +243,7 @@ print(f"R{rank}: {result}")
   - `PYMPI_SIZE`
   - `OMPI_COMM_WORLD_SIZE`
   - `PMI_SIZE`
-  - `SLUM_NPROCS`
+  - `SLURM_NPROCS`
 
 - `rc.rank: int = 0`
 
@@ -253,7 +253,7 @@ print(f"R{rank}: {result}")
   - `PYMPI_RANK`
   - `OMPI_COMM_WORLD_RANK`
   - `PMI_RANK`
-  - `SLUM_PROCID`
+  - `SLURM_PROCID`
 
 - `rc.serial: Iterable[str] = []`
 

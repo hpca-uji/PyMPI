@@ -50,7 +50,7 @@ size = int(
     os.environ.get("PYMPI_SIZE")
     or os.environ.get("OMPI_COMM_WORLD_SIZE")
     or os.environ.get("PMI_SIZE")
-    or os.environ.get("SLUM_NPROCS")
+    or os.environ.get("SLURM_NPROCS")
     or 1
 )
 
@@ -59,7 +59,7 @@ rank = int(
     os.environ.get("PYMPI_RANK")
     or os.environ.get("OMPI_COMM_WORLD_RANK")
     or os.environ.get("PMI_RANK")
-    or os.environ.get("SLUM_PROCID")
+    or os.environ.get("SLURM_PROCID")
     or 0
 )
 
