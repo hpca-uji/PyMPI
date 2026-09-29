@@ -103,12 +103,12 @@ def main(config: Namespace) -> None:
 
 def _start() -> int:
     """System entrypoint"""
-    parser = ArgumentParser(prog="pympi-test-iops", description="PyMPU IOPS test")
+    parser = ArgumentParser(prog="pympi-test-iops", description="PyMPI IOPS test")
     parser.add_argument("mode", choices=list(Mode), help="Synchronization mode")
-    parser.add_argument("--min-size", type=int, default=8, help="Exponenet of minimun message size")
-    parser.add_argument("--step-size", type=int, default=2, help="Exponenet between message sizes")
-    parser.add_argument("--max-size", type=int, default=32, help="Exponenet of maxmimun message size")
-    parser.add_argument("--step-expo", type=float, default=0.5, help="Exponenet of number of splits when stepping down a size")
+    parser.add_argument("--min-size", type=int, default=8, help="Exponent of minimum message size")
+    parser.add_argument("--step-size", type=int, default=2, help="Exponent between message sizes")
+    parser.add_argument("--max-size", type=int, default=32, help="Exponent of maximum message size")
+    parser.add_argument("--step-expo", type=float, default=0.5, help="Exponent of number of splits when stepping down a size")
     parser.add_argument("--reps", type=int, default=1, help="Number of repetitions of messages")
     return main(parser.parse_args())  # type: ignore
 

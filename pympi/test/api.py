@@ -22,7 +22,6 @@ def main(config: Namespace) -> None:
 
     root = 0
     ref = root
-    print(prefix, f"bcast /{ref}")
     res = comm.bcast(rank, root=root)
     print(prefix, f"bcast {res}/{ref}")
     assert res == ref, f"bcast error; got {res}, expect {ref}"
